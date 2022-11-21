@@ -5,7 +5,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import logo from "../images/logo.svg";
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   return (
     <NavWrapper>
       <div className="nav-center">
