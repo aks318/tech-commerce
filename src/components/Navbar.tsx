@@ -24,6 +24,7 @@ const Navbar: React.FC = () => {
 };
 
 const NavWrapper = styled.nav`
+  box-sizing: border-box;
   position: -webkit-sticky;
   position: sticky;
   top: 0;

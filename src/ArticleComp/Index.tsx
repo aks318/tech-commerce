@@ -5,7 +5,10 @@ import "./styles.css";
 import { Dispatch } from "redux";
 import { AddArticle } from "./AddArticle";
 import { Article } from "./Article";
-import { addArticle, removeArticle } from "../store/actionCreators";
+import {
+  addArticle,
+  removeArticle,
+} from "../store/articleRedux/actionCreators";
 
 const MainPage: React.FC = () => {
   const articles: readonly IArticle[] = useSelector(

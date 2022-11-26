@@ -3,14 +3,20 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { createStore, applyMiddleware, Store } from "redux";
+import { createStore, applyMiddleware, Store, AnyAction } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import reducer from "./store/reducer";
+import { combineReducers } from "redux";
+import reducer from "./store/articleRedux/reducer";
+import productReducer from "./store/productReducer/productReducer";
 
-const store: Store<ArticleState, ArticleAction> & {
+const rootReducer = combineReducers<AppState>({
+  reducer: reducer,
+  productReducer: productReducer,
+});
+const store: Store<AppState, AnyAction> & {
   dispatch: DispatchType;
-} = createStore(reducer, applyMiddleware(thunk));
+} = createStore(rootReducer, applyMiddleware(thunk));
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
