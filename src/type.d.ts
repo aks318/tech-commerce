@@ -29,14 +29,19 @@ interface productItemsType {
   image: string;
   freeShipping: boolean;
 }
+interface cartItemType extends productItemsType {
+  count: number;
+  total: number;
+}
+
 interface productStateType {
   sideBarOpen: boolean;
   cartOpen: boolean;
-  cart: [];
-  cartItems: 0;
-  cartSubTotal: 0;
-  cartTax: 0;
-  cartTotal: 0;
+  cart: cartItemType[];
+  cartItems: number;
+  cartSubTotal: number;
+  cartTax: number;
+  cartTotal: number;
   storeProducts: productItemsType[];
   filteredProducts: productItemsType[];
   featuredProducts: productItemsType[];

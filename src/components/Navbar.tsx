@@ -4,8 +4,10 @@ import { Badge, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import logo from "../images/logo.svg";
+import { useSelector } from "react-redux";
 
 const Navbar: React.FC = () => {
+  const { cartItems } = useSelector((state: AppState) => state.productReducer);
   return (
     <NavWrapper>
       <div className="nav-center">
@@ -14,7 +16,7 @@ const Navbar: React.FC = () => {
         </IconButton>
         <img src={logo} alt="tech shop logo" />
         <IconButton aria-label="cart">
-          <Badge badgeContent={4} color="secondary">
+          <Badge badgeContent={cartItems} color="secondary">
             <ShoppingCartIcon fontSize="medium" />
           </Badge>
         </IconButton>
