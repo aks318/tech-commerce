@@ -5,6 +5,7 @@ import "./App.css";
 import MainPage from "./ArticleComp/Index";
 import Home from "./components/Home/Home";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
+      <Footer />
     </React.Fragment>
   );
 }

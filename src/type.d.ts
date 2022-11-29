@@ -34,9 +34,16 @@ interface cartItemType extends productItemsType {
   total: number;
 }
 
+interface socialDataType {
+  id: number;
+  icon: JSX.Element;
+  url: string;
+}
+
 interface productStateType {
   sideBarOpen: boolean;
   cartOpen: boolean;
+  socialLinks: socialDataType[];
   cart: cartItemType[];
   cartItems: number;
   cartSubTotal: number;

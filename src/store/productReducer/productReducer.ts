@@ -1,3 +1,4 @@
+import { socialData } from "../../Data/socialData";
 import {
   ADD_TO_CART,
   GET_PRODUCTS,
@@ -8,6 +9,7 @@ import {
 const initialState: productStateType = {
   sideBarOpen: false,
   cartOpen: false,
+  socialLinks: socialData,
   cart: [],
   cartItems: 0,
   cartSubTotal: 0,
