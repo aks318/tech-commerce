@@ -46,7 +46,7 @@ const AllProduct = () => {
             <Product
               key={product.id}
               product={product}
-              onSingle={setSingleProduct}
+              onSingle={(id) => dispatch(setSingleProduct(id))}
               onCart={(id) => dispatch(addToCart(id))}
             />
           ))}

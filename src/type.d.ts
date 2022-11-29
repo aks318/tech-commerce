@@ -14,11 +14,6 @@ type DispatchType = (args: ArticleAction) => ArticleAction;
 
 // =====Tech-commerce====
 
-interface productAction {
-  type: string;
-  payload: any;
-}
-
 interface productItemsType {
   id: number;
   title: string;
@@ -52,7 +47,7 @@ interface productStateType {
   storeProducts: productItemsType[];
   filteredProducts: productItemsType[];
   featuredProducts: productItemsType[];
-  //   singleProduct: productItemsType;
+  singleProduct: productItemsType;
   loading: boolean;
   search: string;
   price: number;
@@ -66,3 +61,10 @@ interface AppState {
   reducer: ArticleState;
   productReducer: productStateType;
 }
+
+type productActionType = {
+  type: string;
+  payload?: any;
+};
+
+type ProductDispatchType = (arg0: productActionType) => void;

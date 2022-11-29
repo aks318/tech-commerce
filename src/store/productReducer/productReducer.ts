@@ -3,6 +3,8 @@ import {
   ADD_TO_CART,
   FILTER_PRODUCTS,
   GET_PRODUCTS,
+  GET_STORAGE_PRODUCT,
+  SET_SINGLE_PRODUCT,
   SET_TOTAL,
   SORT_DATA,
   SYNC_STORAGE,
@@ -20,7 +22,7 @@ const initialState: productStateType = {
   storeProducts: [],
   filteredProducts: [],
   featuredProducts: [],
-  // singleProduct: {},
+  singleProduct: {} as productItemsType,
   loading: false,
   search: "",
   price: 0,
@@ -32,7 +34,7 @@ const initialState: productStateType = {
 
 const productReducer = (
   state: productStateType = initialState,
-  action: productAction
+  action: productActionType
 ): productStateType => {
   switch (action.type) {
     case GET_PRODUCTS:
@@ -55,6 +57,15 @@ const productReducer = (
         price: maxPrice,
         loading: false,
       };
+    case SET_SINGLE_PRODUCT:
+      let product = state.storeProducts.find(
+        (item) => item.id === action.payload
+      );
+      if (product) {
+        localStorage.setItem("singleProduct", JSON.stringify(product));
+        return { ...state, singleProduct: product, loading: false };
+      }
+      return state;
     case ADD_TO_CART:
       let tempCart = [...state.cart];
       let tempProducts = [...state.storeProducts];
@@ -96,6 +107,12 @@ const productReducer = (
       };
     case SYNC_STORAGE:
       localStorage.setItem("cart", JSON.stringify(state.cart));
+      return state;
+    case GET_STORAGE_PRODUCT:
+      const single = localStorage.getItem("singleProduct");
+      if (single) {
+        return { ...state, singleProduct: JSON.parse(single) };
+      }
       return state;
     case FILTER_PRODUCTS:
       const { name, type } = action.payload.target;

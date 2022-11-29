@@ -19,7 +19,10 @@ const ProductFilter = () => {
     storeProducts,
   } = useSelector((state: AppState) => state.productReducer);
   const companies = storeProducts.map((item) => item.company);
-  const uniqueCompanies = [...new Set(companies)];
+  const uniqueCompanies = companies.reduce((acc: string[], curr: string) => {
+    if (!acc.includes(curr)) acc.push(curr);
+    return acc;
+  }, []);
 
   return (
     <div className="row my-5">
