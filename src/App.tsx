@@ -6,6 +6,7 @@ import MainPage from "./ArticleComp/Index";
 import Home from "./components/Home/Home";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Products from "./components/Products/Products";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
         </Routes>
       </BrowserRouter>
       <Footer />

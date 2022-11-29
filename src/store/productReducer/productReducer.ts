@@ -1,8 +1,10 @@
 import { socialData } from "../../Data/socialData";
 import {
   ADD_TO_CART,
+  FILTER_PRODUCTS,
   GET_PRODUCTS,
   SET_TOTAL,
+  SORT_DATA,
   SYNC_STORAGE,
 } from "./productAction";
 
@@ -37,8 +39,12 @@ const productReducer = (
       const featured = action.payload.filter(
         (item: productItemsType) => item.featured === true
       );
-      let maxPrice = Math.max(...state.storeProducts.map((item) => item.price));
-      let minPrice = Math.min(...state.storeProducts.map((item) => item.price));
+      let maxPrice = Math.max(
+        ...action.payload.map((item: productItemsType) => item.price)
+      );
+      let minPrice = Math.min(
+        ...action.payload.map((item: productItemsType) => item.price)
+      );
       return {
         ...state,
         storeProducts: action.payload,
@@ -91,6 +97,35 @@ const productReducer = (
     case SYNC_STORAGE:
       localStorage.setItem("cart", JSON.stringify(state.cart));
       return state;
+    case FILTER_PRODUCTS:
+      const { name, type } = action.payload.target;
+      const value =
+        type === "checkbox"
+          ? action.payload.target.checked
+          : action.payload.target.value;
+      return { ...state, [name]: value };
+    case SORT_DATA:
+      let sortedProduct = [...state.storeProducts];
+
+      sortedProduct = sortedProduct.filter((item) => item.price <= state.price);
+      if (state.company !== "all") {
+        sortedProduct = sortedProduct.filter(
+          (item) => item.company === state.company
+        );
+      }
+      if (state.shipping) {
+        sortedProduct = sortedProduct.filter(
+          (item) => item.freeShipping === true
+        );
+      }
+      if (state.search.length > 0) {
+        sortedProduct = sortedProduct.filter((item) => {
+          const regex = new RegExp(`${state.search}`, "gi");
+          return item.title.match(regex) || item.company.match(regex);
+        });
+      }
+
+      return { ...state, filteredProducts: sortedProduct };
     default:
       return state;
   }
