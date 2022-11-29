@@ -3,6 +3,7 @@ import {
   ADD_TO_CART,
   FILTER_PRODUCTS,
   GET_PRODUCTS,
+  GET_STORAGE_CART,
   GET_STORAGE_PRODUCT,
   SET_SINGLE_PRODUCT,
   SET_TOTAL,
@@ -107,6 +108,13 @@ const productReducer = (
       };
     case SYNC_STORAGE:
       localStorage.setItem("cart", JSON.stringify(state.cart));
+      return state;
+    case GET_STORAGE_CART:
+      let cart: string | null;
+      cart = localStorage.getItem("cart");
+      if (cart) {
+        return { ...state, cart: JSON.parse(cart) };
+      }
       return state;
     case GET_STORAGE_PRODUCT:
       const single = localStorage.getItem("singleProduct");

@@ -2,6 +2,7 @@ import {
   ADD_TO_CART,
   FILTER_PRODUCTS,
   GET_PRODUCTS,
+  GET_STORAGE_CART,
   GET_STORAGE_PRODUCT,
   SET_SINGLE_PRODUCT,
   SET_TOTAL,
@@ -12,6 +13,8 @@ import {
 export const getProducts =
   (productData: productItemsType[]) => (dispatch: ProductDispatchType) => {
     dispatch({ type: GET_PRODUCTS, payload: productData });
+    dispatch({ type: GET_STORAGE_CART });
+    dispatch({ type: SET_TOTAL });
   };
 
 export const setSingleProduct = (id: number) => {
