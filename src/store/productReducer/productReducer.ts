@@ -1,13 +1,20 @@
+import { socialData } from "../../Data/socialData";
 import {
   ADD_TO_CART,
+  FILTER_PRODUCTS,
   GET_PRODUCTS,
+  GET_STORAGE_CART,
+  GET_STORAGE_PRODUCT,
+  SET_SINGLE_PRODUCT,
   SET_TOTAL,
+  SORT_DATA,
   SYNC_STORAGE,
 } from "./productAction";
 
 const initialState: productStateType = {
   sideBarOpen: false,
   cartOpen: false,
+  socialLinks: socialData,
   cart: [],
   cartItems: 0,
   cartSubTotal: 0,
@@ -16,7 +23,7 @@ const initialState: productStateType = {
   storeProducts: [],
   filteredProducts: [],
   featuredProducts: [],
-  // singleProduct: {},
+  singleProduct: {} as productItemsType,
   loading: false,
   search: "",
   price: 0,
@@ -28,15 +35,19 @@ const initialState: productStateType = {
 
 const productReducer = (
   state: productStateType = initialState,
-  action: productAction
+  action: productActionType
 ): productStateType => {
   switch (action.type) {
     case GET_PRODUCTS:
       const featured = action.payload.filter(
         (item: productItemsType) => item.featured === true
       );
-      let maxPrice = Math.max(...state.storeProducts.map((item) => item.price));
-      let minPrice = Math.min(...state.storeProducts.map((item) => item.price));
+      let maxPrice = Math.max(
+        ...action.payload.map((item: productItemsType) => item.price)
+      );
+      let minPrice = Math.min(
+        ...action.payload.map((item: productItemsType) => item.price)
+      );
       return {
         ...state,
         storeProducts: action.payload,
@@ -47,6 +58,15 @@ const productReducer = (
         price: maxPrice,
         loading: false,
       };
+    case SET_SINGLE_PRODUCT:
+      let product = state.storeProducts.find(
+        (item) => item.id === action.payload
+      );
+      if (product) {
+        localStorage.setItem("singleProduct", JSON.stringify(product));
+        return { ...state, singleProduct: product, loading: false };
+      }
+      return state;
     case ADD_TO_CART:
       let tempCart = [...state.cart];
       let tempProducts = [...state.storeProducts];
@@ -89,6 +109,48 @@ const productReducer = (
     case SYNC_STORAGE:
       localStorage.setItem("cart", JSON.stringify(state.cart));
       return state;
+    case GET_STORAGE_CART:
+      let cart: string | null;
+      cart = localStorage.getItem("cart");
+      if (cart) {
+        return { ...state, cart: JSON.parse(cart) };
+      }
+      return state;
+    case GET_STORAGE_PRODUCT:
+      const single = localStorage.getItem("singleProduct");
+      if (single) {
+        return { ...state, singleProduct: JSON.parse(single) };
+      }
+      return state;
+    case FILTER_PRODUCTS:
+      const { name, type } = action.payload.target;
+      const value =
+        type === "checkbox"
+          ? action.payload.target.checked
+          : action.payload.target.value;
+      return { ...state, [name]: value };
+    case SORT_DATA:
+      let sortedProduct = [...state.storeProducts];
+
+      sortedProduct = sortedProduct.filter((item) => item.price <= state.price);
+      if (state.company !== "all") {
+        sortedProduct = sortedProduct.filter(
+          (item) => item.company === state.company
+        );
+      }
+      if (state.shipping) {
+        sortedProduct = sortedProduct.filter(
+          (item) => item.freeShipping === true
+        );
+      }
+      if (state.search.length > 0) {
+        sortedProduct = sortedProduct.filter((item) => {
+          const regex = new RegExp(`${state.search}`, "gi");
+          return item.title.match(regex) || item.company.match(regex);
+        });
+      }
+
+      return { ...state, filteredProducts: sortedProduct };
     default:
       return state;
   }

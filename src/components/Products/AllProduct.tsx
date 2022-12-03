@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import { productData } from "../../Data/productData";
@@ -12,24 +11,38 @@ import {
 } from "../../store/productReducer/productActionCreators";
 import Product from "../Product";
 import Title from "../Title";
+import ProductFilter from "./ProductFilter";
 
-const Featured = () => {
-  type AppDispatch = ThunkDispatch<productStateType, any, AnyAction>;
-
-  const { featuredProducts } = useSelector(
+const AllProduct = () => {
+  const { filteredProducts: products } = useSelector(
     (state: AppState) => state.productReducer
   );
+  type AppDispatch = ThunkDispatch<productStateType, any, AnyAction>;
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getProducts(productData));
   }, []);
+
   return (
     <section className="py-5">
       <div className="container">
-        <Title title="featured products" center />
-        <div className="row my-5">
-          {featuredProducts.map((product) => (
+        <Title center title="our products" />
+        <ProductFilter />
+        <div className="row">
+          <div className="col-10 mx-auto">
+            <h6 className="text-title">total products: {products.length}</h6>
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row py-5">
+          {products.length === 0 && (
+            <div className="col text-title text-center">
+              sorry, no items matched your search
+            </div>
+          )}
+          {products.map((product) => (
             <Product
               key={product.id}
               product={product}
@@ -38,16 +51,9 @@ const Featured = () => {
             />
           ))}
         </div>
-        <div className="row mt-5">
-          <div className="col text-center">
-            <Link to="/products" className="main-link">
-              our products
-            </Link>
-          </div>
-        </div>
       </div>
     </section>
   );
 };
 
-export default Featured;
+export default AllProduct;
