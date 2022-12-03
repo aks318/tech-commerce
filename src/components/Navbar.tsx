@@ -5,13 +5,19 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import logo from "../images/logo.svg";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
+import { handleSidebar } from "../store/productReducer/productActionCreators";
 
 const Navbar: React.FC = () => {
   const { cartItems } = useSelector((state: AppState) => state.productReducer);
+  type AppDispatch = ThunkDispatch<productStateType, any, AnyAction>;
+  const dispatch: AppDispatch = useDispatch();
   return (
     <NavWrapper>
       <div className="nav-center">
-        <IconButton>
+        <IconButton onClick={() => dispatch(handleSidebar())}>
           <MenuIcon fontSize="medium" />
         </IconButton>
         <img src={logo} alt="tech shop logo" />

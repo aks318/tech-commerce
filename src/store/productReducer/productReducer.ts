@@ -1,3 +1,4 @@
+import { linkData } from "../../Data/linkData";
 import { socialData } from "../../Data/socialData";
 import {
   ADD_TO_CART,
@@ -7,6 +8,7 @@ import {
   GET_STORAGE_PRODUCT,
   SET_SINGLE_PRODUCT,
   SET_TOTAL,
+  SIDEBAR_CLICK,
   SORT_DATA,
   SYNC_STORAGE,
 } from "./productAction";
@@ -14,6 +16,7 @@ import {
 const initialState: productStateType = {
   sideBarOpen: false,
   cartOpen: false,
+  links: linkData,
   socialLinks: socialData,
   cart: [],
   cartItems: 0,
@@ -38,6 +41,8 @@ const productReducer = (
   action: productActionType
 ): productStateType => {
   switch (action.type) {
+    case SIDEBAR_CLICK:
+      return { ...state, sideBarOpen: !state.sideBarOpen };
     case GET_PRODUCTS:
       const featured = action.payload.filter(
         (item: productItemsType) => item.featured === true

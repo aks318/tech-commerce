@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getProducts } from "./store/productReducer/productActionCreators";
 import { productData } from "./Data/productData";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   type AppDispatch = ThunkDispatch<productStateType, any, AnyAction>;
@@ -31,6 +32,7 @@ function App() {
       <Navbar />
       {/* <MainPage /> */}
       <BrowserRouter>
+        <Sidebar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />

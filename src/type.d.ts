@@ -34,10 +34,16 @@ interface socialDataType {
   icon: JSX.Element;
   url: string;
 }
+interface linkDataType {
+  id: number;
+  text: string;
+  path: string;
+}
 
 interface productStateType {
   sideBarOpen: boolean;
   cartOpen: boolean;
+  links: linkDataType[];
   socialLinks: socialDataType[];
   cart: cartItemType[];
   cartItems: number;

@@ -6,9 +6,16 @@ import {
   GET_STORAGE_PRODUCT,
   SET_SINGLE_PRODUCT,
   SET_TOTAL,
+  SIDEBAR_CLICK,
   SORT_DATA,
   SYNC_STORAGE,
 } from "./productAction";
+
+export const handleSidebar = () => {
+  return {
+    type: SIDEBAR_CLICK,
+  };
+};
 
 export const getProducts =
   (productData: productItemsType[]) => (dispatch: ProductDispatchType) => {
@@ -25,7 +32,6 @@ export const setSingleProduct = (id: number) => {
 };
 
 export const addToCart = (id: number) => (dispatch: ProductDispatchType) => {
-  console.log({ dispatch, id });
   dispatch({ type: ADD_TO_CART, payload: id });
   dispatch({ type: SET_TOTAL });
   dispatch({ type: SYNC_STORAGE });
