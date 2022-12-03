@@ -1,5 +1,6 @@
 import {
   ADD_TO_CART,
+  CART_CLICK,
   FILTER_PRODUCTS,
   GET_PRODUCTS,
   GET_STORAGE_CART,
@@ -14,6 +15,11 @@ import {
 export const handleSidebar = () => {
   return {
     type: SIDEBAR_CLICK,
+  };
+};
+export const handleCart = () => {
+  return {
+    type: CART_CLICK,
   };
 };
 

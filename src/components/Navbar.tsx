@@ -8,7 +8,10 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
-import { handleSidebar } from "../store/productReducer/productActionCreators";
+import {
+  handleCart,
+  handleSidebar,
+} from "../store/productReducer/productActionCreators";
 
 const Navbar: React.FC = () => {
   const { cartItems } = useSelector((state: AppState) => state.productReducer);
@@ -21,7 +24,7 @@ const Navbar: React.FC = () => {
           <MenuIcon fontSize="medium" />
         </IconButton>
         <img src={logo} alt="tech shop logo" />
-        <IconButton aria-label="cart">
+        <IconButton aria-label="cart" onClick={() => dispatch(handleCart())}>
           <Badge badgeContent={cartItems} color="secondary">
             <ShoppingCartIcon fontSize="medium" />
           </Badge>

@@ -2,6 +2,7 @@ import { linkData } from "../../Data/linkData";
 import { socialData } from "../../Data/socialData";
 import {
   ADD_TO_CART,
+  CART_CLICK,
   FILTER_PRODUCTS,
   GET_PRODUCTS,
   GET_STORAGE_CART,
@@ -43,6 +44,8 @@ const productReducer = (
   switch (action.type) {
     case SIDEBAR_CLICK:
       return { ...state, sideBarOpen: !state.sideBarOpen };
+    case CART_CLICK:
+      return { ...state, cartOpen: !state.cartOpen };
     case GET_PRODUCTS:
       const featured = action.payload.filter(
         (item: productItemsType) => item.featured === true
