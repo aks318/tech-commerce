@@ -16,6 +16,8 @@ import { getProducts } from "./store/productReducer/productActionCreators";
 import { productData } from "./Data/productData";
 import Sidebar from "./components/Sidebar";
 import Sidecart from "./components/Sidecart";
+import AboutPage from "./components/AboutPage/AboutPage";
+import ContactPage from "./components/ContactPage/ContactPage";
 
 function App() {
   type AppDispatch = ThunkDispatch<productStateType, any, AnyAction>;
@@ -39,6 +41,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<SingleProduct />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </BrowserRouter>
       <Footer />

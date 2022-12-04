@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 interface Props {
   title: string;
-  center: boolean;
+  center?: boolean;
 }
 interface WrapperProps {
-  center: boolean;
+  center?: boolean;
 }
 
 const Title: React.FC<Props> = ({ title, center }) => {
