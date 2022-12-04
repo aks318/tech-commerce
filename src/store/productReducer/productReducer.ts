@@ -3,10 +3,12 @@ import { socialData } from "../../Data/socialData";
 import {
   ADD_TO_CART,
   CART_CLICK,
+  DECREMENT,
   FILTER_PRODUCTS,
   GET_PRODUCTS,
   GET_STORAGE_CART,
   GET_STORAGE_PRODUCT,
+  REMOVE,
   SET_SINGLE_PRODUCT,
   SET_TOTAL,
   SIDEBAR_CLICK,
@@ -114,6 +116,24 @@ const productReducer = (
         cartTax: tax,
         cartTotal: total,
       };
+    case DECREMENT:
+      let filteredCart = state.cart.filter(
+        (item) => item.id !== action.payload
+      );
+      const item = state.cart.find((item) => item.id === action.payload);
+      if (item) {
+        item.count = item.count - 1;
+        if (item.count === 0) {
+          return { ...state, cart: filteredCart };
+        } else {
+          item.total = item.count * item.price;
+          item.total = parseFloat(item.total.toFixed(2));
+        }
+        return { ...state, cart: [...filteredCart, item] };
+      } else return state;
+    case REMOVE:
+      const rmCart = state.cart.filter((item) => item.id !== action.payload);
+      return { ...state, cart: rmCart };
     case SYNC_STORAGE:
       localStorage.setItem("cart", JSON.stringify(state.cart));
       return state;

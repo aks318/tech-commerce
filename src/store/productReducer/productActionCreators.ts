@@ -1,10 +1,13 @@
 import {
   ADD_TO_CART,
   CART_CLICK,
+  CLEAR_CART,
+  DECREMENT,
   FILTER_PRODUCTS,
   GET_PRODUCTS,
   GET_STORAGE_CART,
   GET_STORAGE_PRODUCT,
+  REMOVE,
   SET_SINGLE_PRODUCT,
   SET_TOTAL,
   SIDEBAR_CLICK,
@@ -29,6 +32,30 @@ export const getProducts =
     dispatch({ type: GET_STORAGE_CART });
     dispatch({ type: SET_TOTAL });
   };
+
+export const increment =
+  (id: number) =>
+  (dispatch: (arg0: (dispatch: ProductDispatchType) => void) => void) => {
+    dispatch(addToCart(id));
+  };
+
+export const decrement = (id: number) => (dispatch: ProductDispatchType) => {
+  dispatch({ type: DECREMENT, payload: id });
+  dispatch({ type: SET_TOTAL });
+  dispatch({ type: SYNC_STORAGE });
+};
+
+export const removeItem = (id: number) => (dispatch: ProductDispatchType) => {
+  dispatch({ type: REMOVE, payload: id });
+  dispatch({ type: SET_TOTAL });
+  dispatch({ type: SYNC_STORAGE });
+};
+
+export const clearCart = () => (dispatch: ProductDispatchType) => {
+  dispatch({ type: CLEAR_CART });
+  dispatch({ type: SET_TOTAL });
+  dispatch({ type: SYNC_STORAGE });
+};
 
 export const setSingleProduct = (id: number) => {
   return {
